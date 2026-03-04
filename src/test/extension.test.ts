@@ -42,7 +42,6 @@ suite('JSON Escape / Unescape Extension', () => {
 		const secondStartCol = secondLineText.indexOf('"TABLE B"');
 		const secondEndCol = secondStartCol + '"TABLE B"'.length;
 
-		// Select the entire "COLUMN_A" and "TABLE B" (including the quotes)
 		const firstSelection = new vscode.Selection(0, firstStartCol, 0, firstEndCol);
 		const secondSelection = new vscode.Selection(1, secondStartCol, 1, secondEndCol);
 		editor.selections = [firstSelection, secondSelection];
