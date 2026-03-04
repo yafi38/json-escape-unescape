@@ -6,7 +6,7 @@ A lightweight and fast developer tool for Cursor and VS Code that lets you easil
 
 Quickly format your JSON data without leaving your IDE or relying on external web tools.
 
-* **Escape JSON:** Converts raw JSON or standard text into a properly escaped string format, ready to be embedded within other JSON payloads or code.
+* **Escape JSON:** Converts raw JSON or standard text into a properly escaped string format (using `JSON.stringify` under the hood, but **without** the surrounding quotes), ready to be embedded within other JSON payloads or code.
 * **Unescape JSON:** Takes an escaped JSON string and cleanly parses it back into readable, raw JSON format.
 
 ## Usage
