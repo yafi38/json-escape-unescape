@@ -1,15 +1,25 @@
 import * as assert from 'assert';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from 'vscode';
-// import * as myExtension from '../../extension';
 
-suite('Extension Test Suite', () => {
-	vscode.window.showInformationMessage('Start all tests.');
+suite('JSON Escape / Unescape Extension', () => {
+	test('escape command escapes quotes and newlines in selected text', async () => {
+		const document = await vscode.workspace.openTextDocument({
+			language: 'plaintext',
+			content: 'SELECT *\nFROM "TABLE_A"\nWHERE COLUMN_A = \'ABC\';',
+		});
 
-	test('Sample test', () => {
-		assert.strictEqual(-1, [1, 2, 3].indexOf(5));
-		assert.strictEqual(-1, [1, 2, 3].indexOf(0));
+		const editor = await vscode.window.showTextDocument(document);
+
+		const firstLine = document.lineAt(0);
+		const lastLine = document.lineAt(document.lineCount - 1);
+		editor.selection = new vscode.Selection(
+			firstLine.range.start,
+			lastLine.range.end,
+		);
+
+		await vscode.commands.executeCommand('json-escape-unescape.escape');
+
+		const updatedText = document.getText();
+		assert.strictEqual(updatedText, 'SELECT *\\nFROM \\"TABLE_A\\"\\nWHERE COLUMN_A = \'ABC\';');
 	});
 });
