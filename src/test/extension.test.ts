@@ -20,6 +20,39 @@ suite('JSON Escape / Unescape Extension', () => {
 		await vscode.commands.executeCommand('json-escape-unescape.escape');
 
 		const updatedText = document.getText();
-		assert.strictEqual(updatedText, 'SELECT *\\nFROM \\"TABLE_A\\"\\nWHERE COLUMN_A = \'ABC\';');
+		assert.strictEqual(
+			updatedText,
+			`SELECT *\\nFROM \\"TABLE_A\\"\\nWHERE COLUMN_A = 'ABC';`,
+		);
+	});
+
+	test('escape command handles multiple selections independently', async () => {
+		const document = await vscode.workspace.openTextDocument({
+			language: 'plaintext',
+			content: 'SELECT "COLUMN_A"\nFROM "TABLE B"',
+		});
+
+		const editor = await vscode.window.showTextDocument(document);
+
+		const firstLineText = document.lineAt(0).text;
+		const firstStartCol = firstLineText.indexOf('"COLUMN_A"');
+		const firstEndCol = firstStartCol + '"COLUMN_A"'.length;
+
+		const secondLineText = document.lineAt(1).text;
+		const secondStartCol = secondLineText.indexOf('"TABLE B"');
+		const secondEndCol = secondStartCol + '"TABLE B"'.length;
+
+		// Select the entire "COLUMN_A" and "TABLE B" (including the quotes)
+		const firstSelection = new vscode.Selection(0, firstStartCol, 0, firstEndCol);
+		const secondSelection = new vscode.Selection(1, secondStartCol, 1, secondEndCol);
+		editor.selections = [firstSelection, secondSelection];
+
+		await vscode.commands.executeCommand('json-escape-unescape.escape');
+
+		const updatedText = document.getText();
+		assert.strictEqual(
+			updatedText,
+			`SELECT \\"COLUMN_A\\"\nFROM \\"TABLE B\\"`,
+		);
 	});
 });
