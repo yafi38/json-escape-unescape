@@ -46,3 +46,6 @@ Alternatively, via the terminal:
 
 ### 0.0.2
 * Add whole document escape/unescape when there is no selection.
+
+### 0.0.3
+* Add forgiving regex fallback for invalid JSON strings
