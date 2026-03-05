@@ -26,6 +26,25 @@ suite('JSON Escape / Unescape Extension', () => {
 		);
 	});
 
+	test('escape command escapes whole document when there is no selection', async () => {
+		const document = await vscode.workspace.openTextDocument({
+			language: 'plaintext',
+			content: 'SELECT *\nFROM "TABLE_A"\nWHERE COLUMN_A = \'ABC\';',
+		});
+
+		const editor = await vscode.window.showTextDocument(document);
+		editor.selection = new vscode.Selection(0, 0, 0, 0);
+
+		await vscode.commands.executeCommand('json-escape-unescape.escape');
+
+		const updatedText = document.getText();
+
+		assert.strictEqual(
+			updatedText,
+			`SELECT *\\nFROM \\"TABLE_A\\"\\nWHERE COLUMN_A = 'ABC';`,
+		);
+	});
+
 	test('escape command handles multiple selections independently', async () => {
 		const document = await vscode.workspace.openTextDocument({
 			language: 'plaintext',
@@ -49,6 +68,7 @@ suite('JSON Escape / Unescape Extension', () => {
 		await vscode.commands.executeCommand('json-escape-unescape.escape');
 
 		const updatedText = document.getText();
+
 		assert.strictEqual(
 			updatedText,
 			`SELECT \\"COLUMN_A\\"\nFROM \\"TABLE B\\"`,
@@ -58,7 +78,7 @@ suite('JSON Escape / Unescape Extension', () => {
 	test('unescape command unescapes characters in selected text', async () => {
 		const document = await vscode.workspace.openTextDocument({
 			language: 'plaintext',
-			content: 'SELECT *\\nFROM \\"TABLE_A\\"\\nWHERE COLUMN_A = \'ABC\';'
+			content: 'SELECT *\\nFROM \\"TABLE_A\\"\\nWHERE COLUMN_A = \'ABC\';',
 		});
 
 		const editor = await vscode.window.showTextDocument(document);
@@ -76,7 +96,26 @@ suite('JSON Escape / Unescape Extension', () => {
 
 		assert.strictEqual(
 			updatedText,
-			`SELECT *\nFROM "TABLE_A"\nWHERE COLUMN_A = 'ABC';`
+			`SELECT *\nFROM "TABLE_A"\nWHERE COLUMN_A = 'ABC';`,
+		);
+	});
+
+	test('unescape command unescapes whole document when there is no selection', async () => {
+		const document = await vscode.workspace.openTextDocument({
+			language: 'plaintext',
+			content: 'SELECT *\\nFROM \\"TABLE_A\\"\\nWHERE COLUMN_A = \'ABC\';',
+		});
+
+		const editor = await vscode.window.showTextDocument(document);
+		editor.selection = new vscode.Selection(0, 0, 0, 0);
+
+		await vscode.commands.executeCommand('json-escape-unescape.unescape');
+
+		const updatedText = document.getText();
+
+		assert.strictEqual(
+			updatedText,
+			`SELECT *\nFROM "TABLE_A"\nWHERE COLUMN_A = 'ABC';`,
 		);
 	});
 });
