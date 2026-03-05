@@ -15,14 +15,36 @@ export function activate(context: vscode.ExtensionContext) {
 
                 return JSON.parse(`"${cleanText}"`);
             } catch (e) {
-                vscode.window.showErrorMessage('Failed to unescape: Invalid JSON string');
-
-                return text;
+                return forgivingUnescape(text);
             }
         });
     });
 
     context.subscriptions.push(escapeCmd, unescapeCmd);
+}
+
+function forgivingUnescape(text: string): string {
+    const escapeMap: { [key: string]: string } = {
+        '"': '"',
+        '\\': '\\',
+        '/': '/',
+        'b': '\b',
+        'f': '\f',
+        'n': '\n',
+        'r': '\r',
+        't': '\t'
+    };
+
+    const regex = /\\(?:u([0-9a-fA-F]{4})|(["\\/bfnrt]))/g;
+
+    return text.replace(regex, (match, hexCode, standardChar) => {
+        if (hexCode) {
+            return String.fromCharCode(parseInt(hexCode, 16));
+        } else if (standardChar) {
+            return escapeMap[standardChar];
+        }
+        return match;
+    });
 }
 
 function processText(transform: (text: string) => string): Thenable<boolean> | void {
