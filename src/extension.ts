@@ -33,7 +33,20 @@ function processText(transform: (text: string) => string): Thenable<boolean> | v
     }
 
     return editor.edit(editBuilder => {
-        editor.selections.forEach(selection => {
+        const nonEmptySelections = editor.selections.filter(s => !s.isEmpty);
+        const selections =
+            nonEmptySelections.length > 0
+                ? nonEmptySelections
+                : [
+                        new vscode.Selection(
+                            0,
+                            0,
+                            editor.document.lineCount - 1,
+                            editor.document.lineAt(editor.document.lineCount - 1).range.end.character,
+                        ),
+                    ];
+
+        selections.forEach(selection => {
             const text = editor.document.getText(selection);
 
             if (text) {

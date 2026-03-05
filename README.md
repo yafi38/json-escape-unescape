@@ -12,6 +12,7 @@ Quickly format your JSON data without leaving your IDE or relying on external we
 ## Usage
 
 1. Highlight the text or JSON string you want to modify in your editor.
+   - If you don’t highlight anything (empty selection), the command will apply to the entire document.
 2. Open the Command Palette (`Ctrl+Shift+P` on Linux/Windows, `Cmd+Shift+P` on macOS).
 3. Search for and execute one of the following commands:
 
