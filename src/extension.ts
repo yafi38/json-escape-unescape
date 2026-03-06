@@ -1,11 +1,10 @@
 import * as vscode from 'vscode';
+import { escape } from './escape';
 
 export function activate(context: vscode.ExtensionContext) {
 
     const escapeCmd = vscode.commands.registerCommand('json-escape-unescape.escape', () => {
-        return processText((text) => {
-            return JSON.stringify(text).slice(1, -1);
-        });
+        return processText(escape);
     });
 
     const unescapeCmd = vscode.commands.registerCommand('json-escape-unescape.unescape', () => {
