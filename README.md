@@ -36,16 +36,16 @@ Alternatively, via the terminal:
 
 ## Known Issues
 
-* The unescape command currently expects the highlighted text to be a continuous, valid escaped string. Highlighting malformed text will trigger an error notification.
+* None currently.
 
 ## Release Notes
 
-### 0.0.1
-* Initial release.
-* Added core escape and unescape functionality.
+### 0.0.3
+* Add forgiving regex fallback for invalid JSON strings
 
 ### 0.0.2
 * Add whole document escape/unescape when there is no selection.
 
-### 0.0.3
-* Add forgiving regex fallback for invalid JSON strings
+### 0.0.1
+* Initial release.
+* Added core escape and unescape functionality.
