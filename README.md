@@ -38,14 +38,3 @@ Alternatively, via the terminal:
 
 * None currently.
 
-## Release Notes
-
-### 0.0.3
-* Add forgiving regex fallback for invalid JSON strings
-
-### 0.0.2
-* Add whole document escape/unescape when there is no selection.
-
-### 0.0.1
-* Initial release.
-* Added core escape and unescape functionality.
