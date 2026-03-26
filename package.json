@@ -3,6 +3,7 @@
   "displayName": "JSON Escape / Unescape",
   "description": "Escapes and unescapes JSON strings.",
   "version": "0.0.3",
+  "icon": "icon.png",
   "publisher": "yafi38",
   "repository": {
     "type": "git",
