@@ -1,6 +1,6 @@
 # Change Log
 
-## [Unreleased]
+## [0.0.4] - 2026-03-26
 
 - Fix changelog.
 - Refactor Code.
