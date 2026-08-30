@@ -1,7 +1,8 @@
 # Change Log
 
-## [Unreleased]
+## [1.0.0] - 2026-08-31
 
+- First stable release.
 - Fix unescape removing a lone leading or trailing quote; only a matching pair of surrounding quotes is stripped now.
 - Add keywords, author, and issue/homepage links to the manifest.
 - Rewrite the README: install from Open VSX, corrected command descriptions, accurate known issues.
