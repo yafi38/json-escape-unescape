@@ -102,4 +102,46 @@ suite('JSON Unescape Tests', () => {
 			`[ "Item 1", "Item 2©", ]`,
 		);
 	});
+
+	test('unescape command strips a matched pair of wrapping quotes', async () => {
+		const document = await vscode.workspace.openTextDocument({
+			language: 'plaintext',
+			content: '"line1\\nline2"',
+		});
+
+		const editor = await vscode.window.showTextDocument(document);
+		editor.selection = new vscode.Selection(0, 0, 0, 0);
+
+		await vscode.commands.executeCommand('json-escape-unescape.unescape');
+
+		assert.strictEqual(document.getText(), `line1\nline2`);
+	});
+
+	test('unescape command keeps an unmatched leading quote', async () => {
+		const document = await vscode.workspace.openTextDocument({
+			language: 'plaintext',
+			content: '"unterminated',
+		});
+
+		const editor = await vscode.window.showTextDocument(document);
+		editor.selection = new vscode.Selection(0, 0, 0, 0);
+
+		await vscode.commands.executeCommand('json-escape-unescape.unescape');
+
+		assert.strictEqual(document.getText(), `"unterminated`);
+	});
+
+	test('unescape command keeps an unmatched trailing quote', async () => {
+		const document = await vscode.workspace.openTextDocument({
+			language: 'plaintext',
+			content: 'unterminated"',
+		});
+
+		const editor = await vscode.window.showTextDocument(document);
+		editor.selection = new vscode.Selection(0, 0, 0, 0);
+
+		await vscode.commands.executeCommand('json-escape-unescape.unescape');
+
+		assert.strictEqual(document.getText(), `unterminated"`);
+	});
 });
