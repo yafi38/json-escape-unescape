@@ -2,7 +2,7 @@
   "name": "json-escape-unescape",
   "displayName": "JSON Escape / Unescape",
   "description": "Escapes and unescapes JSON strings.",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "icon": "icon.png",
   "publisher": "yafi38",
   "author": "Mashrur Ahmed Yafi",
