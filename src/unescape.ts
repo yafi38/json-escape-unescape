@@ -1,11 +1,19 @@
 export function unescape(text: string): string {
     try {
-        const cleanText = text.replace(/^"|"$/g, '');
+        const cleanText = stripWrappingQuotes(text);
 
         return JSON.parse(`"${cleanText}"`);
     } catch (e) {
         return forgivingUnescape(text);
     }
+}
+
+function stripWrappingQuotes(text: string): string {
+    if (text.length >= 2 && text.startsWith('"') && text.endsWith('"')) {
+        return text.slice(1, -1);
+    }
+
+    return text;
 }
 
 function forgivingUnescape(text: string): string {

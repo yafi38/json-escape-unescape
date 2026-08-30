@@ -1,5 +1,9 @@
 # Change Log
 
+## [Unreleased]
+
+- Fix unescape removing a lone leading or trailing quote; only a matching pair of surrounding quotes is stripped now.
+
 ## [0.0.4] - 2026-03-26
 
 - Fix changelog.
