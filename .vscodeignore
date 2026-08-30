@@ -1,5 +1,6 @@
 .vscode/**
 .vscode-test/**
+.github/**
 out/**
 node_modules/**
 src/**
@@ -11,4 +12,5 @@ vsc-extension-quickstart.md
 **/eslint.config.mjs
 **/*.map
 **/*.ts
+**/*.vsix
 **/.vscode-test.*
