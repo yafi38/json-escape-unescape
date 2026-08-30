@@ -8,6 +8,7 @@
 - Exclude `.github` and `*.vsix` from the published package.
 - Add a CI workflow that runs lint and tests on pull requests.
 - Harden the publish workflow: least-privilege permissions, pinned CLI versions, and a tag/version check.
+- Add `.editorconfig` and `.gitattributes`, normalize test indentation, and drop the unused scaffold file.
 
 ## [0.0.4] - 2026-03-26
 
